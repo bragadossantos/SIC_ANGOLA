@@ -1,0 +1,21 @@
+# Astro & build
+.astro/
+dist/
+.cache/
+
+# Node
+node_modules/
+.npm/
+.yarn/
+.pnpm/
+
+# Env e segredos
+.env
+.env.local
+.env.development
+.env.production
+
+# Outros comuns
+.DS_Store
+Thumbs.db
+*.log
