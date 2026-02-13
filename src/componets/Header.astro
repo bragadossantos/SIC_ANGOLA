@@ -1,0 +1,52 @@
+---
+---
+
+<header class="bg-sic-blue text-white shadow-lg sticky top-0 z-50">
+  <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <!-- Logo / Nome -->
+    <a href="/" class="text-2xl md:text-3xl font-bold tracking-tight">
+      SIC Angola
+      <span class="text-sic-red text-xl">Investigação Criminal</span>
+    </a>
+
+    <!-- Nav links (desktop) -->
+    <nav class="hidden md:flex space-x-8">
+      <a href="/denuncia" class="hover:text-sic-red transition">Denúncia Anónima</a>
+      <a href="/desaparecidos" class="hover:text-sic-red transition">Desaparecidos</a>
+      <a href="/noticias" class="hover:text-sic-red transition">Notícias</a>
+      <a href="/alertas" class="hover:text-sic-red transition">Alertas</a>
+      <a href="/contactos" class="hover:text-sic-red transition">Contactos</a>
+    </nav>
+
+    <!-- Dark mode toggle + Mobile menu button -->
+    <div class="flex items-center space-x-4">
+      <!-- Dark toggle com Alpine -->
+      <button 
+        x-data="{ dark: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
+        x-init="
+          $watch('dark', value => {
+            if (value) {
+              document.documentElement.classList.add('dark');
+              localStorage.setItem('theme', 'dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+              localStorage.setItem('theme', 'light');
+            }
+          });
+          if (dark) document.documentElement.classList.add('dark');
+        "
+        @click="dark = !dark"
+        class="p-2 rounded-full hover:bg-sic-blue-light transition"
+        aria-label="Alternar modo escuro"
+      >
+        <span x-show="!dark" class="text-xl">🌙</span>
+        <span x-show="dark" class="text-xl">☀️</span>
+      </button>
+
+      <!-- Mobile menu (simples, pode expandir depois com Alpine dropdown) -->
+      <button class="md:hidden text-2xl" aria-label="Abrir menu">
+        ☰
+      </button>
+    </div>
+  </div>
+</header>
