@@ -1,0 +1,50 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="pt" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Serviço de Investigação Criminal - Angola</title>
+    <meta name="description" content="Denuncie anonimamente crimes, consulte desaparecidos e fique informado sobre a segurança pública." />
+  </head>
+  <body class="bg-gray-50 dark:bg-sic-blue text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+
+    <Header />
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-sic-blue to-sic-blue-light text-white py-20 md:py-32">
+      <div class="container mx-auto px-6 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">Serviço de Investigação Criminal</h1>
+        <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">Combatendo o crime com transparência, eficiência e compromisso com a verdade e a segurança dos cidadãos angolanos.</p>
+        
+        <a href="/denuncia" class="inline-block bg-sic-red hover:bg-red-700 text-white font-bold py-5 px-10 rounded-lg text-xl shadow-lg transition transform hover:scale-105">
+          Denunciar Anonimamente Agora →
+        </a>
+      </div>
+    </section>
+
+    <!-- Quick Links / Cards -->
+    <section class="py-16">
+      <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white dark:bg-sic-blue-light p-8 rounded-xl shadow-md hover:shadow-xl transition">
+          <h3 class="text-2xl font-bold mb-4 text-sic-red">Denúncias Online</h3>
+          <p>Envie queixas anónimas de forma segura e rápida. Sua identidade protegida.</p>
+        </div>
+        <div class="bg-white dark:bg-sic-blue-light p-8 rounded-xl shadow-md hover:shadow-xl transition">
+          <h3 class="text-2xl font-bold mb-4 text-sic-red">Desaparecidos</h3>
+          <p>Consulte e ajude na identificação de pessoas desaparecidas em Angola.</p>
+        </div>
+        <div class="bg-white dark:bg-sic-blue-light p-8 rounded-xl shadow-md hover:shadow-xl transition">
+          <h3 class="text-2xl font-bold mb-4 text-sic-red">Notícias & Alertas</h3>
+          <p>Fique atualizado com operações, detenções e prevenções de crimes.</p>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,145 @@
+---
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="pt" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Denúncia Anónima | SIC Angola</title>
+    <!-- Alpine.js CDN (já tens, mas pra garantir) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  </head>
+  <body class="bg-gray-50 dark:bg-sic-blue text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+
+    <Header />
+
+    <main class="flex-grow container mx-auto px-6 py-12">
+      <div class="max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-6 text-sic-red">Denúncia Anónima</h1>
+        <p class="text-center text-lg mb-10">
+          Envie a sua informação de forma 100% anónima. Não recolhemos dados pessoais. A denúncia será analisada com prioridade e confidencialidade.
+        </p>
+
+        <div x-data="{
+          formData: { tipo: '', descricao: '', local: '', arquivos: [] },
+          submitting: false,
+          success: false,
+          error: false,
+          submit() {
+            this.submitting = true;
+            this.error = false;
+            this.success = false;
+
+            // Simula envio (console + delay)
+            setTimeout(() => {
+              console.log('Denúncia enviada:', this.formData);
+              this.success = true;
+              this.submitting = false;
+              // Reset form
+              this.formData = { tipo: '', descricao: '', local: '', arquivos: [] };
+            }, 1500);
+          }
+        }" class="bg-white dark:bg-sic-blue-light p-8 md:p-12 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700">
+
+          <form @submit.prevent="submit" class="space-y-8">
+
+            <!-- Tipo de crime -->
+            <div>
+              <label class="block text-sm font-semibold mb-3">Tipo de Ocorrência *</label>
+              <select 
+                x-model="formData.tipo" 
+                required 
+                class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-sic-blue text-base focus:ring-sic-red focus:border-sic-red"
+              >
+                <option value="">Selecione o tipo...</option>
+                <option>Roubo ou Furto</option>
+                <option>Tráfico de Estupefacientes</option>
+                <option>Violência Doméstica / Familiar</option>
+                <option>Corrupção ou Peculato</option>
+                <option>Homicídio / Tentativa</option>
+                <option>Outros Crimes</option>
+              </select>
+            </div>
+
+            <!-- Descrição -->
+            <div>
+              <label class="block text-sm font-semibold mb-3">Descrição Detalhada *</label>
+              <textarea 
+                x-model="formData.descricao" 
+                required 
+                rows="7" 
+                placeholder="Descreva o que aconteceu, quando, onde, quem envolveu (sem identificar-se)..."
+                class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-sic-blue text-base focus:ring-sic-red focus:border-sic-red"
+              ></textarea>
+            </div>
+
+            <!-- Local (opcional) -->
+            <div>
+              <label class="block text-sm font-semibold mb-3">Local da Ocorrência (opcional)</label>
+              <input 
+                x-model="formData.local" 
+                type="text" 
+                placeholder="Ex: Bairro Cazenga, Município de Luanda, ou coordenadas aproximadas"
+                class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-sic-blue text-base focus:ring-sic-red focus:border-sic-red"
+              >
+            </div>
+
+            <!-- Arquivos (opcional) -->
+            <div>
+              <label class="block text-sm font-semibold mb-3">Anexar Provas (fotos, vídeos, documentos - opcional)</label>
+              <input 
+                type="file" 
+                multiple 
+                accept="image/*,video/*,.pdf" 
+                @change="$el.files.length > 0 ? formData.arquivos = Array.from($el.files).map(f => f.name) : formData.arquivos = []"
+                class="w-full p-4 rounded-lg border dark:border-gray-600 dark:bg-sic-blue text-base file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-sic-red file:text-white hover:file:bg-red-700"
+              >
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Máx. 10MB por ficheiro. Serão processados de forma segura e anónima.</p>
+              <template x-if="formData.arquivos.length > 0">
+                <p class="text-sm mt-2">Ficheiros selecionados: <span x-text="formData.arquivos.join(', ')"></span></p>
+              </template>
+            </div>
+
+            <!-- CAPTCHA placeholder -->
+            <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg text-center">
+              <p class="text-sm mb-4">Verificação humana (CAPTCHA)</p>
+              <!-- Aqui vai o script real do Turnstile depois -->
+              <div class="inline-block bg-white dark:bg-gray-700 p-4 rounded"> [ Cloudflare Turnstile aqui ]</div>
+            </div>
+
+            <!-- Botão submit -->
+            <button 
+              type="submit" 
+              x-bind:disabled="submitting || !formData.tipo || !formData.descricao.trim()"
+              class="w-full bg-sic-red hover:bg-red-700 text-white font-bold py-5 px-8 rounded-xl text-xl transition disabled:opacity-60 disabled:cursor-not-allowed shadow-lg"
+            >
+              <span x-show="!submitting">Enviar Denúncia Anónima</span>
+              <span x-show="submitting">A enviar... Aguarde</span>
+            </button>
+
+            <!-- Mensagens -->
+            <template x-if="success">
+              <div class="mt-6 p-6 bg-green-100 dark:bg-green-900 border border-green-400 text-green-800 dark:text-green-200 rounded-xl text-center font-semibold">
+                Denúncia enviada com sucesso! Obrigado pela colaboração. O número de protocolo será gerado internamente.
+              </div>
+            </template>
+            <template x-if="error">
+              <div class="mt-6 p-6 bg-red-100 dark:bg-red-900 border border-red-400 text-red-800 dark:text-red-200 rounded-xl text-center">
+                Ocorreu um erro. Tente novamente ou ligue 111 para emergência.
+              </div>
+            </template>
+          </form>
+        </div>
+
+        <p class="text-center mt-10 text-sm text-gray-600 dark:text-gray-400">
+          Em caso de perigo imediato, ligue **111** (emergência nacional).
+        </p>
+      </div>
+    </main>
+
+    <Footer />
+  </body>
+</html>
